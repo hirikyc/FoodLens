@@ -2,6 +2,16 @@
 
 FoodLens adalah model deep learning yang dirancang untuk mengklasifikasikan makanan Indonesia menggunakan arsitektur MobileNetV2. Model ini dapat mengenali berbagai jenis makanan Indonesia dari gambar yang diberikan.
 
+## Dataset
+
+Dataset yang digunakan dalam proyek ini merupakan kombinasi dari:
+1. [Indonesian Food Dataset](https://universe.roboflow.com/a-gsuxa/indonesian-food-cd2d4) dari Roboflow Universe berjumlah 20 kelas.
+2. Dataset tambahan yang dikumpulkan secara mandiri oleh tim pengembang 30 kelas.
+
+Dataset ini berisi gambar makanan Indonesia yang diklasifikasikan ke dalam 50 kelas.
+
+Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
 ## Tim Pengembang
 
 Proyek ini dikembangkan oleh:
