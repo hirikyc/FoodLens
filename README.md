@@ -19,7 +19,7 @@ Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativ
 ## Tim Pengembang
 
 Proyek ini dikembangkan oleh:
-1. Ricky Saputra (ML) - [hiirikyc](https://github.com/hiirikyc)
+1. Ricky Saputra (ML) - [hirikyc](https://github.com/hirikyc)
 2. Ch Angga Marcelio (ML) - [AnggaMarcelio](https://github.com/AnggaMarcelio)
 3. Syavira Amalia (ML) - [SyaviraAmalia](https://github.com/SyaviraAmalia)
 4. Ahmad Husein Assalam (FEBE) - [Husen28](https://github.com/Husen28)
