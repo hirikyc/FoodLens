@@ -5,8 +5,12 @@ FoodLens adalah model deep learning yang dirancang untuk mengklasifikasikan maka
 ## Dataset
 
 Dataset yang digunakan dalam proyek ini merupakan kombinasi dari:
-1. [Indonesian Food Dataset](https://universe.roboflow.com/a-gsuxa/indonesian-food-cd2d4) dari Roboflow Universe berjumlah 20 kelas.
-2. Dataset tambahan yang dikumpulkan secara mandiri oleh tim pengembang 30 kelas. [[1](https://universe.roboflow.com/ta-4ec3w/7.-pempek/dataset/2)], [[2](https://universe.roboflow.com/bangkitcapstone-joitq/image_detection-0zdmd/dataset/2/download)], [[3](https://https://www.kaggle.com/datasets/faldoae/padangfood)], [[4](https://www.kaggle.com/datasets/rizkyyk/dataset-food-classification)]
+1. [Indonesian Food Dataset](https://universe.roboflow.com/a-gsuxa/indonesian-food-cd2d4/dataset/8) dari Roboflow Universe
+2. [Pempek Computer Vision](https://universe.roboflow.com/ta-4ec3w/7.-pempek/dataset/2) dari Roboflow Universe
+3. [image_detection Computer Vision](https://universe.roboflow.com/bangkitcapstone-joitq/image_detection-0zdmd/dataset/2/download) dari Roboflow Universe
+4. [Padang Cuisine](https://www.kaggle.com/datasets/faldoae/padangfood) dari Kaggle
+5. [Indonesian Food Dataset](https://www.kaggle.com/datasets/rizkyyk/dataset-food-classification) dari Kaggle
+6. Dataset tambahan yang dikumpulkan secara mandiri oleh tim pengembang
 
 Dataset ini berisi gambar makanan Indonesia yang diklasifikasikan ke dalam 50 kelas.
 
@@ -18,7 +22,7 @@ Proyek ini dikembangkan oleh:
 1. Ricky Saputra (ML) - [hiirikyc](https://github.com/hiirikyc)
 2. Ch Angga Marcelio (ML) - [AnggaMarcelio](https://github.com/AnggaMarcelio)
 3. Syavira Amalia (ML) - [SyaviraAmalia](https://github.com/SyaviraAmalia)
-4. Husen (FEBE) - [Husen28](https://github.com/Husen28)
+4. Ahmad Husein Assalam (FEBE) - [Husen28](https://github.com/Husen28)
 5. Nadia Damayanti (FEBE) - [nadia29d](https://github.com/nadia29d)
 6. Rihhadatul Aisy Al Fitri (FEBE) - [RihhadatulAisyAlFitri](https://github.com/RihhadatulAisyAlFitri)
 
