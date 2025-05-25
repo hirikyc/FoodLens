@@ -134,8 +134,8 @@ Kontribusi selalu diterima! Silakan buat pull request atau buka issue untuk disk
 
 Untuk pertanyaan atau kolaborasi, silakan hubungi salah satu anggota tim:
 - Ricky Saputra: rickysptra24@gmail.com
-- Marcel Angga: chmarcel0603@gmail.com
+- Ch Angga Marcelio: chmarcel0603@gmail.com
 - Syavira Amalia: syaviraamalia53@gmail.com
-- Husen: reddevils28082005@gmail.com
+- Ahmad Husein Assalam: reddevils28082005@gmail.com
 - Nadia Damayanti: nadiadamayanti0929@gmail.com
 - Rihhadatul Aisy Al Fitri: alfitriaisy@gmail.com 
