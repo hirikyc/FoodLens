@@ -98,7 +98,7 @@ Model menggunakan arsitektur MobileNetV2 dengan beberapa modifikasi:
   - GlobalAveragePooling2D
   - Dense (64 units)
   - Dropout (0.3)
-  - Output layer (jumlah kelas sesuai dataset)
+  - Output layer (50 kelas)
 
 ## Training
 
