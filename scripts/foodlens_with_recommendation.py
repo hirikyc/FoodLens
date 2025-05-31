@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
-import onnxruntime as ort
+import tensorflow as tf
 from food_recommendation import FoodPlaceRecommender
 import os
 import pandas as pd
 import json
 
 class FoodLensWithRecommendation:
-    def __init__(self, model_path='model_indonesian_food (1).onnx'):
+    def __init__(self, model_path='model_indonesian_food (1).keras'):
         try:
             # Load the food recognition model
             print("\nInitializing FoodLens system...")
@@ -18,12 +18,19 @@ class FoodLensWithRecommendation:
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
                 
             print("Loading model from:", model_path)
-            self.session = ort.InferenceSession(model_path)
+            self.model = tf.keras.models.load_model(model_path)
             
-            # Get model input details
-            self.input_name = self.session.get_inputs()[0].name
-            self.input_shape = self.session.get_inputs()[0].shape
-            print(f"\nModel input shape: {self.input_shape}")
+            # Print model summary to understand its structure
+            print("\nModel Summary:")
+            self.model.summary()
+            
+            # Get the number of output classes from the model
+            last_layer = self.model.layers[-1]
+            if isinstance(last_layer, tf.keras.layers.Dense):
+                num_classes = last_layer.units
+                print(f"\nNumber of output classes in model: {num_classes}")
+            else:
+                raise ValueError("Last layer is not a Dense layer with softmax activation")
 
             # Load class names from class_indices.json if available
             class_indices_path = 'class_indices.json'
@@ -45,10 +52,10 @@ class FoodLensWithRecommendation:
                     raise ValueError("Tidak ditemukan class_indices.json maupun folder dataset_indonesian_food untuk mendapatkan class names.")
             
             # Make sure the number of class names matches the model output
-            if len(self.class_names) != self.input_shape[1]:
+            if len(self.class_names) != num_classes:
                 raise ValueError(
                     f"Jumlah label makanan ({len(self.class_names)}) "
-                    f"tidak sama dengan jumlah input channel model ({self.input_shape[1]})!\n"
+                    f"tidak sama dengan jumlah output kelas model ({num_classes})!\n"
                     "Pastikan dataset, class_indices.json, dan model cocok."
                 )
 
@@ -73,8 +80,6 @@ class FoodLensWithRecommendation:
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             img = cv2.resize(img, target_size)
             img = img.astype(np.float32) / 255.0
-            img = np.transpose(img, (2, 0, 1))  # Change to NCHW format
-            img = np.expand_dims(img, axis=0)
             print("Image preprocessing completed")
             return img
         except Exception as e:
@@ -85,11 +90,11 @@ class FoodLensWithRecommendation:
         try:
             print(f"\nRecognizing food in image: {image_path}")
             img = self.preprocess_image(image_path)
+            img = np.expand_dims(img, axis=0)
             
             # Get prediction
             print("Running model prediction...")
-            outputs = self.session.run(None, {self.input_name: img})
-            predictions = outputs[0][0]  # Get first output, first batch
+            predictions = self.model.predict(img, verbose=0)[0]
             predicted_class = np.argmax(predictions)
             
             # Print prediction details for debugging
