@@ -1,0 +1,6 @@
+fastapi==0.115.12
+uvicorn==0.34.3
+python-multipart==0.0.20
+tensorflow==2.15.0
+opencv-python==4.11.0.86
+scikit-learn==1.6.1
