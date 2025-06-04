@@ -1,6 +1,24 @@
-# FoodLens - Indonesian Food Classification Model
+# FoodLens - Indonesian Food Classification & Recommendation API
 
-FoodLens adalah model deep learning yang dirancang untuk mengklasifikasikan makanan Indonesia menggunakan arsitektur MobileNetV2. Model ini dapat mengenali berbagai jenis makanan Indonesia dari gambar yang diberikan.
+FoodLens adalah API untuk deteksi makanan dan rekomendasi restoran menggunakan teknologi machine learning. API ini dapat mendeteksi berbagai jenis makanan Indonesia dan memberikan rekomendasi restoran yang menyajikan makanan tersebut.
+
+## Tim Pengembang
+
+Proyek ini dikembangkan oleh:
+1. Ricky Saputra (ML) - [hirikyc](https://github.com/hirikyc)
+2. Ch Angga Marcelio (ML) - [AnggaMarcelio](https://github.com/AnggaMarcelio)
+3. Syavira Amalia (ML) - [SyaviraAmalia](https://github.com/SyaviraAmalia)
+4. Ahmad Husein Assalam (FEBE) - [Husen28](https://github.com/Husen28)
+5. Nadia Damayanti (FEBE) - [nadia29d](https://github.com/nadia29d)
+6. Rihhadatul Aisy Al Fitri (FEBE) - [RihhadatulAisyAlFitri](https://github.com/RihhadatulAisyAlFitri)
+
+## Fitur
+
+- **Deteksi Makanan**: Mengidentifikasi makanan dari gambar yang diunggah
+- **Informasi Asal**: Menampilkan asal daerah dari makanan yang terdeteksi
+- **Rekomendasi Restoran**: Memberikan rekomendasi restoran berdasarkan makanan yang terdeteksi
+- **Top 3 Prediksi**: Menampilkan 3 prediksi teratas dengan tingkat kepercayaan
+- **API Endpoint**: Mudah diintegrasikan dengan aplikasi frontend
 
 ## Dataset
 
@@ -16,36 +34,38 @@ Dataset ini berisi gambar makanan Indonesia yang diklasifikasikan ke dalam 50 ke
 
 Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-## Tim Pengembang
+## Struktur Proyek
 
-Proyek ini dikembangkan oleh:
-1. Ricky Saputra (ML) - [hirikyc](https://github.com/hirikyc)
-2. Ch Angga Marcelio (ML) - [AnggaMarcelio](https://github.com/AnggaMarcelio)
-3. Syavira Amalia (ML) - [SyaviraAmalia](https://github.com/SyaviraAmalia)
-4. Ahmad Husein Assalam (FEBE) - [Husen28](https://github.com/Husen28)
-5. Nadia Damayanti (FEBE) - [nadia29d](https://github.com/nadia29d)
-6. Rihhadatul Aisy Al Fitri (FEBE) - [RihhadatulAisyAlFitri](https://github.com/RihhadatulAisyAlFitri)
-
-## Fitur
-
-- Klasifikasi makanan Indonesia menggunakan MobileNetV2
-- Data augmentation untuk meningkatkan performa model
-- Evaluasi model dengan confusion matrix dan classification report
-- Visualisasi hasil prediksi
-- Mendukung format model Keras (.keras) dan HDF5 (.h5)
+```
+app/
+├── main.py                 # File utama FastAPI
+├── models/
+│   ├── food_detection.keras    # Model deteksi makanan
+│   └── recommendation_system.pkl    # Sistem rekomendasi restoran
+└── data/
+    ├── food_labels.pkl     # Label makanan
+    ├── food_origins.pkl    # Data asal makanan
+    └── restaurant_db.csv   # Database restoran
+```
 
 ## Persyaratan Sistem
 
-- Python 3.8 atau lebih tinggi
-- GPU (disarankan untuk training yang lebih cepat)
+- Python 3.11 atau lebih baru
+- FastAPI
+- TensorFlow
+- OpenCV
+- scikit-learn
+- uvicorn
+- python-multipart
 - RAM minimal 8GB
+- GPU (disarankan untuk training yang lebih cepat)
 
 ## Instalasi
 
-1. Clone repository ini:
+1. Clone repository:
 ```bash
-git clone https://github.com/hiirikyc/foodlens.git
-cd foodlens
+git clone https://github.com/hirikyc/FoodLens
+cd FoodLens
 ```
 
 2. Buat virtual environment (opsional tapi disarankan):
@@ -55,33 +75,112 @@ source venv/bin/activate  # Untuk Linux/Mac
 venv\Scripts\activate     # Untuk Windows
 ```
 
-3. Install dependencies:
+3. Instal dependensi:
 ```bash
-pip install -r requirements.txt
+pip install fastapi uvicorn python-multipart tensorflow opencv-python scikit-learn
 ```
 
-## Struktur Dataset
+## Menjalankan Aplikasi
 
-Dataset harus disusun dalam format berikut:
-```
-dataset_indonesian_food/
-├── makanan1/
-│   ├── gambar1.jpg
-│   ├── gambar2.jpg
-│   └── ...
-├── makanan2/
-│   ├── gambar1.jpg
-│   ├── gambar2.jpg
-│   └── ...
-└── ...
-```
-
-## Penggunaan
-
-1. Siapkan dataset Anda sesuai dengan struktur yang disebutkan di atas
-2. Jalankan script training:
+1. Masuk ke direktori aplikasi:
 ```bash
-python Scripts/foodlens.py
+cd app
+```
+
+2. Jalankan server:
+```bash
+python3 main.py
+```
+
+Server akan berjalan di `http://localhost:8000`
+
+## API Endpoints
+
+### 1. Deteksi Makanan
+- **URL**: `/detect`
+- **Method**: `POST`
+- **Content-Type**: `multipart/form-data`
+- **Body**: 
+  - `file`: File gambar (jpg, jpeg, png)
+- **Response**:
+```json
+{
+    "detection": {
+        "food_name": "nama_makanan",
+        "origin": "asal_daerah",
+        "confidence": 0.95,
+        "top_predictions": [
+            {
+                "food_name": "nama_makanan",
+                "confidence": 0.95,
+                "origin": "asal_daerah"
+            }
+        ]
+    },
+    "recommendations": [
+        {
+            "name": "nama_restoran",
+            "cuisine": "jenis_masakan",
+            "rating": 4.5,
+            "similarity_score": 0.85
+        }
+    ]
+}
+```
+
+### 2. Rekomendasi Restoran
+- **URL**: `/recommend/{food_name}`
+- **Method**: `GET`
+- **Response**: Daftar restoran yang direkomendasikan
+
+### 3. Halaman Upload
+- **URL**: `/detect`
+- **Method**: `GET`
+- **Response**: Halaman HTML untuk upload gambar
+
+## Dokumentasi API
+
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+## Contoh Integrasi
+
+### Menggunakan JavaScript/Fetch
+```javascript
+// Upload gambar untuk deteksi
+async function detectFood(imageFile) {
+    const formData = new FormData();
+    formData.append('file', imageFile);
+
+    const response = await fetch('http://localhost:8000/detect', {
+        method: 'POST',
+        body: formData
+    });
+    return await response.json();
+}
+
+// Mendapatkan rekomendasi restoran
+async function getRecommendations(foodName) {
+    const response = await fetch(`http://localhost:8000/recommend/${foodName}`);
+    return await response.json();
+}
+```
+
+### Menggunakan Python/Requests
+```python
+import requests
+
+# Upload gambar untuk deteksi
+def detect_food(image_path):
+    with open(image_path, 'rb') as f:
+        files = {'file': f}
+        response = requests.post('http://localhost:8000/detect', files=files)
+    return response.json()
+
+# Mendapatkan rekomendasi restoran
+def get_recommendations(food_name):
+    response = requests.get(f'http://localhost:8000/recommend/{food_name}')
+    return response.json()
 ```
 
 ## Arsitektur Model
@@ -112,23 +211,30 @@ Model dilatih dengan parameter berikut:
   - Width/Height shift: 0.2
   - Horizontal flip: True
 
-## Evaluasi
+## File yang Diberikan ke Tim Backend
 
-Model dievaluasi menggunakan:
-- Confusion Matrix
-- Classification Report
-- Training & Validation Accuracy Plot
+Berikut adalah file-file yang perlu diberikan ke tim backend untuk diintegrasikan dengan website:
 
-## Output
+1. **File Utama API**:
+   - `app/main.py` - File utama FastAPI yang berisi semua endpoint dan logika aplikasi
 
-Model akan menghasilkan beberapa file:
-- `model_indonesian_food.keras`: Model dalam format Keras
-- `model_indonesian_food.h5`: Model dalam format HDF5
-- `food_annotations.csv`: File anotasi dataset
+2. **File Model**:
+   - `app/models/food_detection.keras` - Model untuk deteksi makanan
+   - `app/models/recommendation_system.pkl` - Model untuk sistem rekomendasi restoran
 
-## Kontribusi
+3. **File Data**:
+   - `app/data/food_labels.pkl` - Berisi label-label makanan
+   - `app/data/food_origins.pkl` - Berisi informasi asal daerah makanan
+   - `app/data/restaurant_db.csv` - Database restoran
 
-Kontribusi selalu diterima! Silakan buat pull request atau buka issue untuk diskusi.
+4. **File Dokumentasi**:
+   - `README.md` - Dokumentasi lengkap tentang cara menggunakan API
+
+Tim backend perlu memastikan:
+1. Semua dependensi terinstal sesuai yang tercantum di README.md
+2. Struktur folder tetap sama seperti di atas
+3. Menggunakan Python 3.11 atau lebih baru
+4. Menjalankan aplikasi dengan perintah `python3 main.py` di dalam folder `app`
 
 ## Kontak
 
