@@ -9,6 +9,8 @@ import os
 from typing import List, Dict, Any
 import uvicorn
 from sklearn.metrics.pairwise import cosine_similarity
+import requests
+import tempfile
 
 class RestaurantRecommender:
     def __init__(self, vectorizer, place_vectors, places_data):
@@ -52,23 +54,52 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# URL untuk model dan data dari environment variables
+MODEL_URL = os.getenv("MODEL_URL")
+RECOMMENDER_URL = os.getenv("RECOMMENDER_URL")
+RESTAURANT_DB_URL = os.getenv("RESTAURANT_DB_URL")
+FOOD_LABELS_URL = os.getenv("FOOD_LABELS_URL")
+FOOD_ORIGINS_URL = os.getenv("FOOD_ORIGINS_URL")
+
+# Validasi environment variables
+required_vars = ["MODEL_URL", "RECOMMENDER_URL", "RESTAURANT_DB_URL", "FOOD_LABELS_URL", "FOOD_ORIGINS_URL"]
+missing_vars = [var for var in required_vars if not os.getenv(var)]
+if missing_vars:
+    raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
+
+def download_file(url: str, filename: str):
+    """Download file dari URL dan simpan ke temporary directory"""
+    response = requests.get(url)
+    if response.status_code == 200:
+        temp_dir = tempfile.gettempdir()
+        file_path = os.path.join(temp_dir, filename)
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+        return file_path
+    else:
+        raise Exception(f"Failed to download {filename}")
+
 # Muat model deteksi makanan
 print("\nMemuat model deteksi makanan...")
-model = tf.keras.models.load_model(os.path.join('models', 'food_detection.keras'))
+model_path = download_file(MODEL_URL, "food_detection.keras")
+model = tf.keras.models.load_model(model_path)
 
 # Muat label makanan
 print("Memuat label makanan...")
-with open(os.path.join('data', 'food_labels.pkl'), 'rb') as f:
+labels_path = download_file(FOOD_LABELS_URL, "food_labels.pkl")
+with open(labels_path, 'rb') as f:
     class_names = pickle.load(f)
 
 # Muat asal makanan
 print("Memuat asal makanan...")
-with open(os.path.join('data', 'food_origins.pkl'), 'rb') as f:
+origins_path = download_file(FOOD_ORIGINS_URL, "food_origins.pkl")
+with open(origins_path, 'rb') as f:
     food_origins = pickle.load(f)
 
 # Inisialisasi rekomendasi restoran
 print("Menginisialisasi rekomendasi restoran...")
-with open(os.path.join('models', 'recommendation_system.pkl'), 'rb') as f:
+recommender_path = download_file(RECOMMENDER_URL, "recommendation_system.pkl")
+with open(recommender_path, 'rb') as f:
     recommender_data = pickle.load(f)
     recommender = RestaurantRecommender(
         vectorizer=recommender_data['vectorizer'],
