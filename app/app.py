@@ -127,16 +127,10 @@ def preprocess_image(image_bytes: bytes) -> np.ndarray:
     return img
 
 @app.get("/")
-async def root():
-    """Endpoint root"""
-    return {
-        "message": "Selamat datang di FoodLens API",
-        "endpoints": {
-            "/detect": "POST - Unggah gambar untuk deteksi makanan",
-            "/recommend/{food_name}": "GET - Dapatkan rekomendasi restoran untuk makanan tertentu"
-        }
-    }
+def root():
+    return {"message": "Hello from Vercel!"}
 
+'''
 @app.post("/detect")
 async def detect_food(file: UploadFile = File(...)):
     """
@@ -218,3 +212,4 @@ async def get_recommendations(food_name: str):
         return recommendations
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 
+'''
