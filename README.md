@@ -17,8 +17,6 @@ Proyek ini dikembangkan oleh:
 - **Deteksi Makanan**: Mengidentifikasi makanan dari gambar yang diunggah
 - **Informasi Asal**: Menampilkan asal daerah dari makanan yang terdeteksi
 - **Rekomendasi Restoran**: Memberikan rekomendasi restoran berdasarkan makanan yang terdeteksi
-- **Top 3 Prediksi**: Menampilkan 3 prediksi teratas dengan tingkat kepercayaan
-- **API Endpoint**: Mudah diintegrasikan dengan aplikasi frontend
 
 ## Dataset
 
@@ -37,11 +35,12 @@ Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativ
 ## Struktur Proyek
 
 ```
-app/
-├── main.py                 # File utama FastAPI
+model/
+├── app.py                 # File utama FastAPI
+├── requirements.txt       # Library Model
+├── README.md              # Wajib ketika menggunakan huggingface
 ├── models/
-│   ├── food_detection.keras    # Model deteksi makanan
-│   └── recommendation_system.pkl    # Sistem rekomendasi restoran
+│   ├── model_indonesian_food.h5    # Model deteksi makanan
 └── data/
     ├── food_labels.pkl     # Label makanan
     ├── food_origins.pkl    # Data asal makanan
