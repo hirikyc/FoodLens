@@ -60,6 +60,7 @@ Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativ
 │   │   ├── routes/    # Routing configuration
 │   │   └── utils/     # Utility functions
 │   └── styles/         # CSS styles
+├── dataset           # dataset gambar
 ├── package.json        # Node.js dependencies
 └── vite.config.js     # Vite configuration
 ```
