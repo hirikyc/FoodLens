@@ -1,6 +1,11 @@
-# FoodLens - Indonesian Food Classification & Recommendation API
+# FoodLens - Indonesian Food Classification & Recommendation
 
-FoodLens adalah API untuk deteksi makanan dan rekomendasi restoran menggunakan teknologi machine learning. API ini dapat mendeteksi berbagai jenis makanan Indonesia dan memberikan rekomendasi restoran yang menyajikan makanan tersebut.
+FoodLens adalah Aplikasi Website untuk deteksi makanan dan rekomendasi restoran menggunakan teknologi machine learning. Foodlens dapat mendeteksi berbagai jenis makanan Indonesia dan memberikan rekomendasi restoran yang menyajikan makanan tersebut.
+
+## Deployment
+
+- **Machine Learning Model**: [Hugging Face Spaces](https://huggingface.co/spaces/rickysptra24/FoodLens)
+- **Website**: [Netlify](https://guileless-quokka-c0da21.netlify.app/)
 
 ## Tim Pengembang
 
@@ -30,64 +35,58 @@ Dataset yang digunakan dalam proyek ini merupakan kombinasi dari:
 
 Dataset ini berisi gambar makanan Indonesia yang diklasifikasikan ke dalam 50 kelas. 
 
-Link Dataset dapat di akses disini: https://drive.google.com/drive/folders/1WOJlFzG9wgAUrcxC7kMQIiCF13MHea8d?usp=sharing   
+Link Dataset dapat di akses disini: [Dataset](https://drive.google.com/drive/folders/1WOJlFzG9wgAUrcxC7kMQIiCF13MHea8d?usp=sharing)
 
 Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## Struktur Proyek
 
 ```
-model/
-├── app.py                 # File utama FastAPI
-├── requirements.txt       # Library Model
-├── README.md              # Wajib digunakan ketika menggunakan huggingface
-├── models/
-    ├── model_indonesian_food.h5    # Model deteksi makanan
-└── data/
-    ├── food_labels.pkl     # Label makanan
-    ├── food_origins.pkl    # Data asal makanan
-    └── restaurant_db.csv   # Database restoran
-src/
-├── index.html
-├── backend
-    ├── db.js
-    ├── index.js
-    ├── package-lock.json
-    ├── vercel.json
-├── public
-    ├── images
-    ├── _redirects
-    ├── manifest.json
-    ├── service-worket.js
-├── scripts
-    ├── config.js
-    ├── index.js
-    ├── data
-        ├── FoodLensLoginAPI.js
-        ├── FoodLensMLAPI.js
-    ├── pages
-    ├── routes
-        ├── config.js
-        ├── index.js
-    ├── utils
-        ├── auth.js
-        ├── index.js
-└── styles
-    ├── responsive.css
-    └── styles.css
+├── model/                  # Machine Learning Model
+│   ├── app.py             # FastAPI untuk ML model
+│   ├── requirements.txt   # Dependencies Python untuk ML
+│   ├── models/           # Model ML
+│   └── data/            # Data files
+├── src/                  # Frontend dan Backend
+│   ├── index.html       # Halaman utama
+│   ├── backend/         # Backend API
+│   │   ├── db.js       # Database configuration
+│   │   ├── index.js    # Main backend server
+│   │   └── vercel.json # Deployment config
+│   ├── public/         # Static assets
+│   ├── scripts/        # Frontend JavaScript
+│   │   ├── data/      # API integrations
+│   │   ├── pages/     # Frontend pages
+│   │   ├── routes/    # Routing configuration
+│   │   └── utils/     # Utility functions
+│   └── styles/         # CSS styles
+├── package.json        # Node.js dependencies
+└── vite.config.js     # Vite configuration
 ```
 
 ## Persyaratan Sistem
 
+### Machine Learning (Python)
 - Python 3.11 atau lebih baru
-- FastAPI
-- TensorFlow
-- OpenCV
-- scikit-learn
-- uvicorn
-- python-multipart
-- RAM minimal 8GB
-- GPU (disarankan untuk training yang lebih cepat)
+- Dependencies (lihat model/requirements.txt):
+  - gradio==3.50.2
+  - tensorflow==2.18.0
+  - keras==3.8.0
+  - numpy==1.26.4
+  - opencv-python-headless==4.8.0.76
+  - scikit-learn==1.3.0
+  - pandas==2.0.0
+  - h5py>=3.11.0
+  - protobuf>=3.20.3
+  - markupsafe==2.1.5
+
+### Backend & Frontend (Node.js)
+- Node.js 16.x atau lebih baru
+- Dependencies (lihat package.json):
+  - @gradio/client
+  - vite
+  - jsonwebtoken
+  - pg
 
 ## Instalasi
 
@@ -97,35 +96,91 @@ git clone https://github.com/hirikyc/FoodLens
 cd FoodLens
 ```
 
-2. Buat virtual environment (opsional tapi disarankan):
+2. Setup Machine Learning Model:
 ```bash
+cd model
+# Buat virtual environment
 python -m venv venv
-source venv/bin/activate  # Untuk Linux/Mac
-venv\Scripts\activate     # Untuk Windows
+
+# Aktifkan virtual environment
+# Untuk Windows:
+venv\Scripts\activate
+# Untuk Linux/Mac:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Pastikan model sudah ada di folder models/
+# Jika belum, download model dari link dataset
 ```
 
-3. Instal dependensi:
+3. Setup Backend & Frontend:
 ```bash
-pip install fastapi uvicorn python-multipart tensorflow opencv-python scikit-learn
+cd src
+# Install dependencies Node.js
+npm install
+
+# Pastikan file .env sudah dikonfigurasi dengan benar
+# Contoh isi .env:
+# DATABASE_URL=your_database_url
+# JWT_SECRET=your_jwt_secret
 ```
 
 ## Menjalankan Aplikasi
 
-1. Masuk ke direktori aplikasi:
-```bash
-cd app
-```
+Untuk menjalankan aplikasi secara lokal, Anda perlu menjalankan ketiga komponen (ML Model, Backend, dan Frontend) secara terpisah:
 
-2. Jalankan server:
+1. Menjalankan Machine Learning Model:
 ```bash
-python3 main.py
+cd model
+# Pastikan virtual environment sudah aktif
+python app.py
 ```
+ML Model akan berjalan di `http://localhost:7860`
 
-Server akan berjalan di `http://localhost:8000`
+2. Menjalankan Backend:
+```bash
+cd src/backend
+npm start
+```
+Backend API akan berjalan di `http://localhost:8000`
+
+3. Menjalankan Frontend:
+```bash
+cd src
+npm run dev
+```
+Frontend akan berjalan di `http://localhost:5173`
+
+### Catatan Penting:
+- Pastikan semua port (7860, 8000, 5173) tidak digunakan oleh aplikasi lain
+- Pastikan semua dependencies sudah terinstall dengan benar
+- Pastikan file konfigurasi (.env) sudah diatur dengan benar
+- Untuk pengembangan, Anda bisa menjalankan ketiga komponen di terminal terpisah
+- Untuk production, gunakan deployment yang sudah disediakan di Hugging Face dan Netlify
+
+## Deployment
+
+### Machine Learning Model
+Model machine learning di-deploy menggunakan Hugging Face Spaces:
+1. Buat akun di [Hugging Face](https://huggingface.co)
+2. Buat Space baru dengan tipe Gradio
+3. Upload semua file dari folder `model/` ke Space
+4. Space akan otomatis menjalankan model dan menyediakan API endpoint
+
+### Website
+Website di-deploy menggunakan Netlify:
+1. Buat akun di [Netlify](https://netlify.com)
+2. Hubungkan repository GitHub
+3. Konfigurasi build settings:
+   - Build command: `cd src && npm run build`
+   - Publish directory: `src/dist`
+4. Deploy website
 
 ## API Endpoints
 
-### 1. Deteksi Makanan
+### 1. Deteksi Makanan (ML Model)
 - **URL**: `/detect`
 - **Method**: `POST`
 - **Content-Type**: `multipart/form-data`
@@ -157,60 +212,10 @@ Server akan berjalan di `http://localhost:8000`
 }
 ```
 
-### 2. Rekomendasi Restoran
+### 2. Rekomendasi Restoran (Backend)
 - **URL**: `/recommend/{food_name}`
 - **Method**: `GET`
 - **Response**: Daftar restoran yang direkomendasikan
-
-### 3. Halaman Upload
-- **URL**: `/detect`
-- **Method**: `GET`
-- **Response**: Halaman HTML untuk upload gambar
-
-## Dokumentasi API
-
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
-
-## Contoh Integrasi
-
-### Menggunakan JavaScript/Fetch
-```javascript
-// Upload gambar untuk deteksi
-async function detectFood(imageFile) {
-    const formData = new FormData();
-    formData.append('file', imageFile);
-
-    const response = await fetch('http://localhost:8000/detect', {
-        method: 'POST',
-        body: formData
-    });
-    return await response.json();
-}
-
-// Mendapatkan rekomendasi restoran
-async function getRecommendations(foodName) {
-    const response = await fetch(`http://localhost:8000/recommend/${foodName}`);
-    return await response.json();
-}
-```
-
-### Menggunakan Python/Requests
-```python
-import requests
-
-# Upload gambar untuk deteksi
-def detect_food(image_path):
-    with open(image_path, 'rb') as f:
-        files = {'file': f}
-        response = requests.post('http://localhost:8000/detect', files=files)
-    return response.json()
-
-# Mendapatkan rekomendasi restoran
-def get_recommendations(food_name):
-    response = requests.get(f'http://localhost:8000/recommend/{food_name}')
-    return response.json()
-```
 
 ## Arsitektur Model
 
@@ -239,31 +244,6 @@ Model dilatih dengan parameter berikut:
   - Rotation range: 20°
   - Width/Height shift: 0.2
   - Horizontal flip: True
-
-## File yang Diberikan ke Tim Backend
-
-Berikut adalah file-file yang perlu diberikan ke tim backend untuk diintegrasikan dengan website:
-
-1. **File Utama API**:
-   - `app/main.py` - File utama FastAPI yang berisi semua endpoint dan logika aplikasi
-
-2. **File Model**:
-   - `app/models/food_detection.keras` - Model untuk deteksi makanan
-   - `app/models/recommendation_system.pkl` - Model untuk sistem rekomendasi restoran
-
-3. **File Data**:
-   - `app/data/food_labels.pkl` - Berisi label-label makanan
-   - `app/data/food_origins.pkl` - Berisi informasi asal daerah makanan
-   - `app/data/restaurant_db.csv` - Database restoran
-
-4. **File Dokumentasi**:
-   - `README.md` - Dokumentasi lengkap tentang cara menggunakan API
-
-Tim backend perlu memastikan:
-1. Semua dependensi terinstal sesuai yang tercantum di README.md
-2. Struktur folder tetap sama seperti di atas
-3. Menggunakan Python 3.11 atau lebih baru
-4. Menjalankan aplikasi dengan perintah `python3 main.py` di dalam folder `app`
 
 ## Kontak
 
