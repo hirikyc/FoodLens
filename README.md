@@ -28,7 +28,9 @@ Dataset yang digunakan dalam proyek ini merupakan kombinasi dari:
 5. [Indonesian Food Dataset](https://www.kaggle.com/datasets/rizkyyk/dataset-food-classification) dari Kaggle
 6. Dataset tambahan yang dikumpulkan secara mandiri oleh tim pengembang
 
-Dataset ini berisi gambar makanan Indonesia yang diklasifikasikan ke dalam 50 kelas.
+Dataset ini berisi gambar makanan Indonesia yang diklasifikasikan ke dalam 50 kelas. 
+
+Link Dataset dapat di akses disini: https://drive.google.com/drive/folders/1WOJlFzG9wgAUrcxC7kMQIiCF13MHea8d?usp=sharing   
 
 Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
