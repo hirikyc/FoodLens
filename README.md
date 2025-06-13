@@ -38,13 +38,41 @@ Dataset dari Roboflow Universe dilisensikan di bawah [CC BY 4.0](https://creativ
 model/
 ├── app.py                 # File utama FastAPI
 ├── requirements.txt       # Library Model
-├── README.md              # Wajib ketika menggunakan huggingface
+├── README.md              # Wajib digunakan ketika menggunakan huggingface
 ├── models/
-│   ├── model_indonesian_food.h5    # Model deteksi makanan
+    ├── model_indonesian_food.h5    # Model deteksi makanan
 └── data/
     ├── food_labels.pkl     # Label makanan
     ├── food_origins.pkl    # Data asal makanan
     └── restaurant_db.csv   # Database restoran
+src/
+├── index.html
+├── backend
+    ├── db.js
+    ├── index.js
+    ├── package-lock.json
+    ├── vercel.json
+├── public
+    ├── images
+    ├── _redirects
+    ├── manifest.json
+    ├── service-worket.js
+├── scripts
+    ├── config.js
+    ├── index.js
+    ├── data
+        ├── FoodLensLoginAPI.js
+        ├── FoodLensMLAPI.js
+    ├── pages
+    ├── routes
+        ├── config.js
+        ├── index.js
+    ├── utils
+        ├── auth.js
+        ├── index.js
+├── styles
+    ├── responsive.css
+    ├── styles.css
 ```
 
 ## Persyaratan Sistem
