@@ -70,9 +70,9 @@ src/
     ├── utils
         ├── auth.js
         ├── index.js
-├── styles
+└── styles
     ├── responsive.css
-    ├── styles.css
+    └── styles.css
 ```
 
 ## Persyaratan Sistem
